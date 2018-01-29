@@ -1,5 +1,5 @@
 # Maze-Generator
-Well, generates amazeing mazes...
+Well, generates mazes...
 
 Options given by passing the "--help" argument:		./Maze-Generator --help
 

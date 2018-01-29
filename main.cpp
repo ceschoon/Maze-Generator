@@ -13,8 +13,9 @@ int main(int argc, char *argv[])
 
 	int mapSizeX = 29;
 	int mapSizeY = 29;        // maze's size
+	int seed = RandSeed().getSeed();
 
-	bool interrupt = initParameters(argc, argv, mapSizeX, mapSizeY);
+	bool interrupt = initParameters(argc, argv, mapSizeX, mapSizeY, seed);
     if (interrupt){return 0;}	
 
 	// create the window
@@ -31,7 +32,8 @@ int main(int argc, char *argv[])
 	
 	// create the map
 	
-	Map map(mapSizeY,mapSizeX);
+	RandSeed randSeed(seed);
+	Map map(mapSizeY,mapSizeX,randSeed);
 	map.recursiveDivision2();
 
 	// main loop
@@ -86,6 +88,13 @@ int main(int argc, char *argv[])
 						 sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
 				{
     				view.zoom(1.25f);
+				}
+		
+				// get seed
+
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+				{
+    				std::cout << map.Getseed().getSeed() << std::endl;
 				}
 			}
         }

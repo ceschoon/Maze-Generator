@@ -1,15 +1,17 @@
 #ifndef MAP_H
 #define MAP_H
 
+#include "randSeed.h"
 #include <vector>
 #include <iostream>
 
 class Map
 {
     public:
-        Map(int mapHeight, int mapWidth);		// odd numbers 
+        Map(int mapHeight, int mapWidth, RandSeed seed);	// odd numbers 
         ~Map();
 
+		const RandSeed Getseed() const {return m_seed;}
         const int GetmapWidth() const {return m_mapWidth;}
 		const int GetmapHeight() const {return m_mapHeight;}
 		const int GetgridAt(int i, int j) const {return m_grid[i][j];}
@@ -31,6 +33,7 @@ class Map
 		int m_mapHeight;
 		std::vector<std::vector<int>> m_grid;
 		std::vector<std::vector<int>> m_updateList;
+		RandSeed m_seed;
 };
 
 #endif // MAP_H

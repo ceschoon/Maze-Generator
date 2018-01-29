@@ -1,5 +1,5 @@
 #include "../include/map.h"
-#include "../include/randomWithSeed.h"
+#include "../include/randSeed.h"
 #include <cstdlib>
 
 /*
@@ -8,7 +8,7 @@
  */
 
 
-Map::Map(int mapHeight, int mapWidth)
+Map::Map(int mapHeight, int mapWidth, RandSeed seed)
 {
 	if (mapWidth%2==1)
 	{
@@ -34,6 +34,7 @@ Map::Map(int mapHeight, int mapWidth)
 	std::vector<int> tempVector(mapWidth, 0);
 	std::vector<std::vector<int>> tempGrid(mapHeight, tempVector);
 	m_grid = tempGrid;
+	m_seed = seed;
 }
 
 Map::~Map(){};
@@ -88,7 +89,7 @@ void Map::recursiveDivision2(int recursionLevel)
 		
 		if (recursionLevel%2==0)
 		{
-			randIndex = randomWithSeed()%M;
+			randIndex = this->m_seed.randomWithSeed()%M;
 			for (int i=0; i<2*N+1; i++)
 			{
 				this->m_grid[i][2*randIndex+1]=1;
@@ -96,7 +97,7 @@ void Map::recursiveDivision2(int recursionLevel)
 		}
 		else
 		{
-			randIndex = randomWithSeed()%N;
+			randIndex = this->m_seed.randomWithSeed()%N;
 			for (int i=0; i<2*M+1; i++)
 			{
 				this->m_grid[2*randIndex+1][i]=1;
@@ -109,12 +110,12 @@ void Map::recursiveDivision2(int recursionLevel)
 
 		if (recursionLevel%2==0)
 		{
-			randIndex2 = randomWithSeed()%(N+1);
+			randIndex2 = this->m_seed.randomWithSeed()%(N+1);
 			this->m_grid[2*randIndex2][2*randIndex+1] = 0;
 		}
 		else
 		{
-			randIndex2 = randomWithSeed()%(M+1);
+			randIndex2 = this->m_seed.randomWithSeed()%(M+1);
 			this->m_grid[2*randIndex+1][2*randIndex2] = 0;
 		}
 
@@ -122,8 +123,8 @@ void Map::recursiveDivision2(int recursionLevel)
 
 		if (recursionLevel%2==0) 
 		{
-			Map map1(2*N+1,2*randIndex+1);
-			Map map2(2*N+1,2*(M-randIndex-1)+1);
+			Map map1(2*N+1,2*randIndex+1,this->m_seed);
+			Map map2(2*N+1,2*(M-randIndex-1)+1,this->m_seed);
 
 			map1.recursiveDivision2(recursionLevel+1);
 			map2.recursiveDivision2(recursionLevel+1);
@@ -145,8 +146,8 @@ void Map::recursiveDivision2(int recursionLevel)
 		}
 		else
 		{
-			Map map1(2*randIndex+1,2*M+1);
-			Map map2(2*(N-randIndex-1)+1,2*M+1);
+			Map map1(2*randIndex+1,2*M+1,this->m_seed);
+			Map map2(2*(N-randIndex-1)+1,2*M+1,this->m_seed);
 
 			map1.recursiveDivision2(recursionLevel+1);
 			map2.recursiveDivision2(recursionLevel+1);
@@ -188,8 +189,8 @@ void Map::recursiveDivision4(int recursionLevel)
 	{
 		// create two walls
 		
-		int randI = randomWithSeed()%N;
-		int randJ = randomWithSeed()%M;
+		int randI = this->m_seed.randomWithSeed()%N;
+		int randJ = this->m_seed.randomWithSeed()%M;
 
 		for (int i=0; i<2*M+1; i++)
 		{
@@ -202,18 +203,18 @@ void Map::recursiveDivision4(int recursionLevel)
 
 		// make holes in the walls
 		
-		int randI2 = randomWithSeed()%(N+1);
-		int randJ2 = randomWithSeed()%(M+1);
+		int randI2 = this->m_seed.randomWithSeed()%(N+1);
+		int randJ2 = this->m_seed.randomWithSeed()%(M+1);
 		int randI3 = randI2;
 		int randJ3 = randJ2;
 
 		while (randI3==randI2)
 		{
-			randI3 = randomWithSeed()%(N+1);
+			randI3 = this->m_seed.randomWithSeed()%(N+1);
 		}
 		while (randJ3==randJ2)
 		{
-			randJ3 = randomWithSeed()%(M+1);
+			randJ3 = this->m_seed.randomWithSeed()%(M+1);
 		}
 		
 		this->m_grid[2*randI+1][2*randJ2] = 0;
@@ -223,10 +224,10 @@ void Map::recursiveDivision4(int recursionLevel)
 
 		// recursion		
 		
-		Map map11(2*randI+1,2*randJ+1);
-		Map map12(2*randI+1,2*(N-randJ-1)+1);
-		Map map21(2*(N-randI-1)+1,2*randJ+1);
-		Map map22(2*(N-randI-1)+1,2*(N-randJ-1)+1);
+		Map map11(2*randI+1,2*randJ+1,this->m_seed);
+		Map map12(2*randI+1,2*(N-randJ-1)+1,this->m_seed);
+		Map map21(2*(N-randI-1)+1,2*randJ+1,this->m_seed);
+		Map map22(2*(N-randI-1)+1,2*(N-randJ-1)+1,this->m_seed);
 
 		map11.recursiveDivision4(recursionLevel+1);
 		map12.recursiveDivision4(recursionLevel+1);

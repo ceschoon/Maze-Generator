@@ -27,9 +27,9 @@ std::vector<std::string> extractParametreAndValue(char* argument)
     return std::vector<std::string> {parametre, value};
 }
 
-bool initParameters(int argc, char* argv[], int &mapSizeX, int &mapSizeY)
+bool initParameters(int argc, char* argv[], int &mapSizeX, int &mapSizeY, int &seed)
 {
-    std::vector<std::string> parametres = {"help", "mazeSizeX", "mazeSizeY"};
+    std::vector<std::string> parametres = {"help", "mazeSizeX", "mazeSizeY", "seed"};
 
     for (int i=1; i<argc; i++)
     {
@@ -87,6 +87,17 @@ bool initParameters(int argc, char* argv[], int &mapSizeX, int &mapSizeY)
                     std::cerr << "Parameter \"" << parametres[2] << "\" must be odd and positive integer" << std::endl;
                     return true;
                 }
+            }
+
+			if (argument[0] == parametres[3])
+            {
+                char valueInChars[argument[1].size()];
+                for (int j=0; j<argument[1].size(); j++)
+                {
+                    valueInChars[j] = argument[1][j];
+                }
+
+                seed = std::atoi(valueInChars);
             }
         }
     }

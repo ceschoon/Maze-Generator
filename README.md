@@ -1,6 +1,8 @@
 # Maze-Generator
 Well, generates mazes...
 
+![alt text](Screenshot.png?raw=true "Screenshot")
+
 Options given by passing the "--help" argument:		./Maze-Generator --help
 
 To generate a 101x101 labyrinth: ./Maze-Generator --mazeSizeX=101 --mazeSizeY=101

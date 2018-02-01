@@ -24,7 +24,6 @@ int main(int argc, char *argv[])
 	sf::Image image;
 	sf::Texture texture;
 	sf::Sprite sprite;
-	//sf::View view = window.getView();
 	sf::View view(sf::FloatRect(0, 0, (mapSizeX+2)*squareSize, (mapSizeY+2)*squareSize));
 
 	image.create((mapSizeX+2)*squareSize, (mapSizeY+2)*squareSize, sf::Color::Black);
@@ -34,7 +33,7 @@ int main(int argc, char *argv[])
 	
 	RandSeed randSeed(seed);
 	Map map(mapSizeY,mapSizeX,randSeed);
-	map.recursiveDivision2();
+	map.recursiveDivision();
 
 	// main loop
 
@@ -98,8 +97,6 @@ int main(int argc, char *argv[])
 				}
 			}
         }
-
-		// processing objects
 		
 		// render the map
 		

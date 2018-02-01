@@ -19,8 +19,7 @@ class Map
 			const {return m_updateList;}
 		//const std::vector<int> GetNthPixelToUpdate(int n) const {return m_grid[n];}
 		
-		void recursiveDivision2(int recursionLevel=0);
-        void recursiveDivision4(int recursionLevel=0);
+		void recursiveDivision(int recursionLevel=0);
 		friend std::ostream& operator<<(std::ostream& stream, const Map& map);
 		void addToUpdateList(int i, int j);
 		void addEntireGridToUpdateList();
